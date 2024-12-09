@@ -1,0 +1,22 @@
+name: Run Cirrus Tasks
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to main
+  pull_request:
+    branches:
+      - master  # Trigger the workflow on pull request to master
+
+jobs:
+  run_cirrus_tasks:
+    runs-on: ubuntu-latest  # You can choose any runner (e.g., ubuntu-latest, self-hosted)
+    container:
+      image: debian  # Define the Docker image to use for the job
+      options: --cpus="4" --memory="12g"  # Set CPU and memory limits
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run the script
+        run: bash ./scripts/xdebian.sh
